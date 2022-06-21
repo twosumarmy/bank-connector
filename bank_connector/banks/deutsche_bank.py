@@ -1,8 +1,8 @@
 import base64
 from enum import Enum, unique
 from requests import Response
-from urllib.parse import urlencode, urljoin
 
+from bank_connector.authorization import AuthorizationCodeGrant
 from bank_connector.client import BankClientBase
 
 
@@ -11,24 +11,17 @@ class Mode(Enum):
     Simulation = "https://simulator-api.db.com"
 
 
-class DeutscheBankClient(BankClientBase):
+class DeutscheBankClient(BankClientBase, AuthorizationCodeGrant):
     """Deutsche Bank Client with high-level operations"""
 
     def __init__(self):
-        base_url = Mode.Simulation.value
-        super().__init__(base_url)
+        super().__init__(Mode.Simulation.value)
 
-    def get_authorize_url(self, client_id: str, redirect_uri: str):
-        """Get the url for login and grant access pages"""
-        return self._format_authorize_url(client_id, redirect_uri)
-
-    def _format_authorize_url(self, client_id: str, redirect_uri: str) -> str:
+    def get_authorization_url(self, client_id: str, redirect_uri: str) -> str:
         path = "/gw/oidc/authorize"
-        query = "?" + urlencode(dict(response_type="code", client_id=client_id, redirect_uri=redirect_uri))
-        return urljoin(self.base_url, path + query)
+        return AuthorizationCodeGrant.format_authorization_url(self.base_url, path, client_id, redirect_uri)
 
     def get_access_token(self, client_id: str, client_secret: str, code: str, redirect_uri: str) -> Response:
-        """Request access token with given code"""
         path = "/gw/oidc/token"
         params = {
             "grant_type": "authorization_code",
@@ -39,8 +32,7 @@ class DeutscheBankClient(BankClientBase):
         headers = {
             "Authorization": f"Basic {encoded_string}"
         }
-        response = self.post(path=path, params=params, _headers=headers)
-        return response
+        return self.post(path=path, params=params, _headers=headers)
 
     def get_cash_accounts(self) -> Response:
         """Get cash account information"""
