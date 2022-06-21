@@ -30,3 +30,18 @@ class CommerzBankClient(BankClientBase, AuthorizationCodeGrant):
         }
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         return self.post(path=path, body=params, _headers=headers)
+
+    def get_cash_accounts(self) -> Response:
+        path = "/accounts-api/v3/accounts"
+        response = self.get(path=path)
+        return response
+
+    def get_account_balances(self, account_id: str) -> Response:
+        path = f"/accounts-api/v3/accounts/{account_id}/balances"
+        response = self.get(path=path)
+        return response
+
+    def get_account_transactions(self, account_id: str) -> Response:
+        path = f"/accounts-api/v3/accounts/{account_id}/transactions"
+        response = self.get(path=path)
+        return response

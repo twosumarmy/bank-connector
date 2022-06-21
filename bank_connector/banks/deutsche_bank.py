@@ -35,13 +35,11 @@ class DeutscheBankClient(BankClientBase, AuthorizationCodeGrant):
         return self.post(path=path, params=params, _headers=headers)
 
     def get_cash_accounts(self) -> Response:
-        """Get cash account information"""
         path = "/gw/dbapi/banking/cashAccounts/v2"
         response = self.get(path=path)
         return response
 
     def get_transactions(self, iban: str) -> Response:
-        """Get transactions for cash accounts"""
         path = "/gw/dbapi/banking/transactions/v2"
         params = {
             "iban": iban
