@@ -8,8 +8,8 @@ authors = [
 ]
 readme = "README.rst"
 repository = "https://github.com/twosumarmy/bank-connector"
-homepage = "https://github.com/twosumarmy/bank-connecto"
-documentation = "https://github.com/twosumarmy/bank-connecto"
+homepage = "https://github.com/twosumarmy/bank-connector"
+documentation = "https://github.com/twosumarmy/bank-connector"
 keywords = ["bank", "connector"]
 classifiers = [
     "Topic :: Software Development :: Libraries",

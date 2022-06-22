@@ -9,6 +9,7 @@ This project contains clients for multiple bank APIs.
 Following bank APIs are supported:
 
 * `Deutsche Bank API <https://developer.db.com/>`_
+* `Commerz Bank API <https://developer.commerzbank.com/>`_
 
 Usage
 =====
