@@ -17,7 +17,7 @@ class CommerzBankClient(BankClientBase, AuthorizationCodeGrant):
 
     def get_authorization_url(self, client_id: str, redirect_uri: str) -> str:
         path = "/auth/realms/sandbox/protocol/openid-connect/auth"
-        return AuthorizationCodeGrant.format_authorization_url(self.base_url, path, client_id, redirect_uri)
+        return self.format_authorization_url(self.base_url, path, client_id, redirect_uri)
 
     def get_access_token(self, client_id: str, client_secret: str, code: str, redirect_uri: str) -> Response:
         path = "/auth/realms/sandbox/protocol/openid-connect/token"
